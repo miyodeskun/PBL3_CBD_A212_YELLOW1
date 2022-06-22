@@ -1,6 +1,68 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>My Winning Wheel</title>
+        <script src='Winwheel.js'></script>
+    </head>
+    <body>
+        <canvas id='canvas' width='880' height='300'>
+            Canvas not supported, use another browser.
+        </canvas>
+        <!-- <script>
+            let theWheel = new Winwheel({
+                'canvasId'    : 'myCanvas',
+                'numSegments' : 12,
+                'fillStyle'   : '#e7706f',
+                'lineWidth'   : 3
+            });
+        </script> -->
+        <script>
+            let theWheel = new Winwheel({
+                'numSegments' : 4,
+                'segments'    :
+                [
+                    {'fillStyle' : '#eae56f', 'text' : 'Segment 1'},
+                    {'fillStyle' : '#89f26e', 'text' : 'Segment 2'},
+                    {'fillStyle' : '#7de6ef', 'text' : 'Segment 3'},
+                    {'fillStyle' : '#e7706f', 'text' : 'Segment 4'}
+                ]
+            });
+         
+            function addSegment()
+            {
+                // Use a date object to set the text of each added segment to the current minutes:seconds
+                // (just to give each new segment a different label).
+                let date = new Date();
+         
+                // The Second parameter in the call to addSegment specifies the position,
+                // in this case 1 meaning the new segment goes at the start of the wheel.
+                theWheel.addSegment({
+                    'text' : date.getMinutes() + ':' + date.getSeconds(),
+                    'fillStyle' : 'aqua'
+                }, 1);
+         
+                // The draw method of the wheel object must be called in order for the changes
+                // to be rendered.
+                theWheel.draw();
+            }
+         
+            function deleteSegment()
+            {
+                // Call function to remove a segment from the wheel, by default the last one will be
+                // removed; you can pass in the number of the segment to delete if desired.
+                theWheel.deleteSegment();
+         
+                // The draw method of the wheel object must be called to render the changes.
+                theWheel.draw();
+            }
+        </script>
+        <button onClick="addSegment();">Add Segment</button>
+        <button onClick="deleteSegment();">Delete Segment</button>
+    </body>
+</html>
+
+<!-- <html>
+    <head>
         <meta name ="viewport" content="width=device-width, initial-scale=1.0">
         <title>CBD Yellow 2</title>
         <link rel="stylesheet" href="style.css" type="text/css">
@@ -13,4 +75,4 @@
             <input type="submit" value="Submit">
           </form>
     </body>
-</html>
+</html> -->
