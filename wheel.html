@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" type = "text/css" href="style.css">
-	<title>Spin Wheel</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Spin Wheel</title>
+    <!-- <script src='Winwheel.js'></script> -->
 </head>
 <body>
-    <div id="chart"></div>    
+    <div id="chart"></div>
+    <div id="question"><h1></h1></div>
+    
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
         var padding = {top:20, right:40, bottom:0, left:0},
@@ -18,17 +20,17 @@
             oldrotation = 0,
             picked = 100000,
             oldpick = [],
-            color = d3.scale.category20(); //category20c()
+            color = d3.scale.category20(); 
 
         var data = [
-            {"label":"Name 1",  "value":1,  "Name":"Name 1"}, 
-            {"label":"Name 2",  "value":1,  "Name":"Name 2"}, 
-            {"label":"Name 3",  "value":1,  "Name":"Name 3"}, 
-            {"label":"Name 4",  "value":1,  "Name":"Name 4"}, 
-            {"label":"Name 5",  "value":1,  "Name":"Name 5"}, 
-            {"label":"Name 6",  "value":1,  "Name":"Name 6"}, 
-            {"label":"Name 7",  "value":1,  "Name":"Name 7"}, 
-            {"label":"Name 8",  "value":1,  "Name":"Name 8"}, 
+            {"label":"Name 1",  "value":1,  "question":"Name 1"}, 
+            {"label":"Name 2",  "value":1,  "question":"Name 2"}, 
+            {"label":"Name 3",  "value":1,  "question":"Name 3"}, 
+            {"label":"Name 4",  "value":1,  "question":"Name 4"}, 
+            {"label":"Name 5",  "value":1,  "question":"Name 5"}, 
+            {"label":"Name 6",  "value":1,  "question":"Name 6"}, 
+            {"label":"Name 7",  "value":1,  "question":"Name 7"}, 
+            {"label":"Name 8",  "value":1,  "question":"Name 8"}, 
         ];
 
         var svg = d3.select('#chart')
@@ -75,7 +77,6 @@
 
         container.on("click", spin);
 
-
         function spin(d){
             
             container.on("click", null);
@@ -97,7 +98,6 @@
             picked = Math.round(data.length - (rotation % 360)/ps);
             picked = picked >= data.length ? (picked % data.length) : picked;
 
-
             if(oldpick.indexOf(picked) !== -1){
                 d3.select(this).call(spin);
                 return;
@@ -112,13 +112,13 @@
                 .attrTween("transform", rotTween)
                 .each("end", function(){
 
-                    //mark Name as seen
+                    //mark question as seen
                     d3.select(".slice:nth-child(" + (picked + 1) + ") path")
                         .attr("fill", "#111");
 
-                    //populate Name
-                    d3.select("#Name h1")
-                        .text(data[picked].Name);
+                    //populate question
+                    d3.select("#question h1")
+                        .text(data[picked].question);
 
                     oldrotation = rotation;
                 
@@ -131,13 +131,13 @@
             .attr("transform", "translate(" + (w + padding.left + padding.right) + "," + ((h/2)+padding.top) + ")")
             .append("path")
             .attr("d", "M-" + (r*.15) + ",0L0," + (r*.05) + "L0,-" + (r*.05) + "Z")
-            .style({"fill":"red"});
+            .style({"fill":"black"});
 
         //draw spin circle
         container.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
-            .attr("r", 70)
+            .attr("r", 60)
             .style({"fill":"white","cursor":"pointer"});
 
         //spin text
